@@ -1,0 +1,437 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    /* Rainbow colors: Blue, Yellow, Red, Orange, Green, Purple */
+    background: linear-gradient(
+        135deg,
+        #1e3a8a 0%,      /* Deep Blue */
+        #fbbf24 20%,     /* Yellow */
+        #ef4444 40%,     /* Red */
+        #f97316 60%,     /* Orange */
+        #10b981 80%,     /* Green */
+        #8b5cf6 100%     /* Purple */
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 35s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 0%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* Subtle overlay for better readability - keeps background from being too intense */
+.animated-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: -1;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 50px 24px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========== HEADER ========== */
+.header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.header h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 50%, #f0f0f0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* ========== FORM CARD ========== */
+.form-card {
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    padding: 36px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    margin-bottom: 32px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.3);
+}
+
+.input-group {
+    margin-bottom: 28px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1a1a2e;
+}
+
+.input-group select,
+.input-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    background: white;
+}
+
+.input-group select:focus,
+.input-group input:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+}
+
+.input-group select:hover,
+.input-group input:hover {
+    border-color: #fbbf24;
+}
+
+/* ========== GENERATE BUTTON with Shimmer Effect ========== */
+#generateBtn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #ef4444 50%, #fbbf24 100%);
+    background-size: 200% 200%;
+    background-position: 0% 0%;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Button gradient animation on hover - moves from bottom-right to top-left */
+#generateBtn:hover {
+    background-position: 100% 100%;
+    transform: scale(1.02);
+    box-shadow: 0 15px 35px -10px rgba(139, 92, 246, 0.5);
+    transition: background-position 0.5s ease;
+}
+
+/* Shimmer/Glow effect that sweeps across the button */
+#generateBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+#generateBtn:hover::before {
+    left: 100%;
+}
+
+#generateBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#generateBtn:disabled::before {
+    display: none;
+}
+
+/* ========== LOADING ========== */
+.loading {
+    text-align: center;
+    padding: 48px;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    margin-top: 24px;
+}
+
+.spinner {
+    width: 56px;
+    height: 56px;
+    border: 4px solid #e2e8f0;
+    border-top-color: #8b5cf6;
+    border-right-color: #ef4444;
+    border-bottom-color: #fbbf24;
+    border-left-color: #10b981;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading p {
+    color: #4a5568;
+    font-size: 1rem;
+}
+
+/* ========== RESULTS SECTION ========== */
+.result-section {
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    padding: 32px;
+    margin-top: 32px;
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.result-header h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.copy-btn {
+    padding: 10px 20px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: #8b5cf6;
+}
+
+.copy-btn:hover {
+    background: linear-gradient(135deg, #8b5cf6, #ef4444);
+    color: white;
+    border-color: transparent;
+    transform: scale(1.02);
+}
+
+.result-content {
+    line-height: 1.8;
+    color: #2d3748;
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+/* ========== PROMPT LIBRARY (COLLAPSIBLE) ========== */
+.prompt-library {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    margin-top: 32px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.15);
+}
+
+.library-header {
+    padding: 20px 28px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #8b5cf6 50%, #ef4444 100%);
+    background-size: 200% 200%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-position 0.3s ease;
+}
+
+.library-header:hover {
+    background-position: 100% 50%;
+}
+
+.library-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.library-toggle {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.library-toggle.rotated {
+    transform: rotate(180deg);
+}
+
+.library-content {
+    padding: 24px 28px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: white;
+}
+
+.library-content.hidden {
+    display: none;
+}
+
+.prompt-category {
+    margin-bottom: 28px;
+}
+
+.prompt-category:last-child {
+    margin-bottom: 0;
+}
+
+.prompt-category strong {
+    display: block;
+    margin-bottom: 14px;
+    font-size: 0.9rem;
+    color: #8b5cf6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.prompt-category code {
+    display: block;
+    background: #f8fafc;
+    padding: 14px 16px;
+    margin: 10px 0;
+    border-radius: 14px;
+    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #e2e8f0;
+    color: #2d3748;
+}
+
+.prompt-category code:hover {
+    background: linear-gradient(135deg, #8b5cf6, #ef4444, #fbbf24);
+    color: white;
+    transform: translateX(8px);
+    border-color: transparent;
+}
+
+/* ========== UTILITIES ========== */
+.hidden {
+    display: none;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px 20px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .form-card {
+        padding: 24px;
+    }
+    
+    .result-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .library-header {
+        padding: 16px 20px;
+    }
+    
+    .library-content {
+        padding: 16px 20px;
+    }
+    
+    .prompt-category code {
+        font-size: 0.75rem;
+        padding: 10px 12px;
+    }
+}

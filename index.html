@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Generator | Professional Suite</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>AI Content Generator</h1>
+            <p>Professional content creation powered by artificial intelligence</p>
+        </div>
+
+        <div class="form-card">
+            <div class="input-group">
+                <label>Content Type</label>
+                <select id="contentType">
+                    <option value="Blog Post">Blog Post</option>
+                    <option value="Email">Email</option>
+                    <option value="LinkedIn Post">LinkedIn Post</option>
+                    <option value="Cover Letter">Cover Letter</option>
+                    <option value="Study Notes">Study Notes</option>
+                    <option value="Resume Summary">Resume Summary</option>
+                    <option value="Meeting Agenda">Meeting Agenda</option>
+                    <option value="Project Proposal">Project Proposal</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Topic / Subject</label>
+                <input type="text" id="topic" placeholder="Enter your topic... (e.g., Artificial Intelligence, Time Management, Leadership)">
+            </div>
+
+            <div class="input-group">
+                <label>Tone of Voice</label>
+                <select id="tone">
+                    <option value="Professional">Professional</option>
+                    <option value="Friendly">Friendly & Approachable</option>
+                    <option value="Formal">Formal & Academic</option>
+                    <option value="Creative">Creative & Inspiring</option>
+                    <option value="Urgent">Urgent & Action-Oriented</option>
+                    <option value="Humorous">Humorous & Witty</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Length</label>
+                <select id="length">
+                    <option value="Short">Short (2-3 paragraphs)</option>
+                    <option value="Medium" selected>Medium (4-5 paragraphs)</option>
+                    <option value="Long">Long (6-8 paragraphs)</option>
+                </select>
+            </div>
+
+            <button id="generateBtn">
+                Generate Content
+            </button>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Generating content... Please wait</p>
+        </div>
+
+        <div id="resultSection" class="result-section hidden">
+            <div class="result-header">
+                <h2>Generated Content</h2>
+                <button id="copyBtn" class="copy-btn">Copy to Clipboard</button>
+            </div>
+            <div id="result" class="result-content"></div>
+        </div>
+
+        <div class="prompt-library">
+            <div class="library-header">
+                <h3>Prompt Library</h3>
+                <span class="library-toggle">▼</span>
+            </div>
+            <div class="library-content hidden">
+                <div class="prompt-category">
+                    <strong>Career & Professional</strong>
+                    <code>"Write a cover letter for a [position] role at [company]"</code>
+                    <code>"Create a LinkedIn post announcing my new role in [field]"</code>
+                    <code>"Write a resume summary for a [role] with [X] years experience"</code>
+                </div>
+                <div class="prompt-category">
+                    <strong>Content Creation</strong>
+                    <code>"Write a blog post about [topic] targeting professionals"</code>
+                    <code>"Create study notes summarizing [topic] in bullet points"</code>
+                    <code>"Write a project proposal for [initiative] addressing [problem]"</code>
+                </div>
+                <div class="prompt-category">
+                    <strong>Communication</strong>
+                    <code>"Write a professional email requesting [something]"</code>
+                    <code>"Draft a meeting agenda for [purpose]"</code>
+                    <code>"Write a follow-up email after [event/meeting]"</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
